@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "/usr/include/**",
+                "/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include/**",
+                "/usr/local/pspdev/psp/sdk/include",
+                "/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include",
+                "${workspaceFolder}/include",
+                "/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/local/pspdev/bin/psp-g++",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.cpptools"
+        }
+    ],
+    "version": 4
+}

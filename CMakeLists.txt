@@ -8,11 +8,13 @@ set(LOCAL_PROJECT_DESCRIPTION "Description")
 # Header files (relative to "include" directory)
 set(HEADERS
     header.h
+    mainApp.h
 )
 
 # Source files (relative to "src" directory)
 set(SOURCES
     main.cpp
+    mainApp.cpp
 )
 
 # Compiler definitions
@@ -43,6 +45,7 @@ IF(PLATFORM_PSP)
     list(APPEND DEFINES IS_PSP)
 
     set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/psp")
+    file(COPY include/assets/funkyFont.ttf DESTINATION ${CMAKE_BINARY_DIR}/bin/psp/assets)
 
     target_link_libraries(${LOCAL_PROJECT_NAME} PRIVATE
             SDL2main
@@ -75,12 +78,12 @@ IF(PLATFORM_PSP)
 ELSE()
     target_link_libraries(${LOCAL_PROJECT_NAME} PRIVATE SDL2main SDL2 SDL2_ttf png freetype)
     set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "bin/desktop")
+    file(COPY include/assets/funkyFont.ttf DESTINATION ${CMAKE_BINARY_DIR}/bin/desktop/assets)
 
 ENDIF()
 
 list(TRANSFORM HEADERS PREPEND "include/")
 list(TRANSFORM SOURCES PREPEND "src/")
-file(COPY include/assets/funkyFont.ttf DESTINATION ${CMAKE_BINARY_DIR}/bin/desktop/assets)
 
 target_include_directories(${LOCAL_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_sources(${LOCAL_PROJECT_NAME} PRIVATE ${SOURCES} ${HEADERS})

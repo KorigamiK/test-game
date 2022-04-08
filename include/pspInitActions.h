@@ -1,13 +1,12 @@
 #pragma once
 
 #ifdef IS_PSP
+#include <pspctrl.h>
 #include <pspdebug.h>
+#include <pspdisplay.h>
+#include <pspiofilemgr.h>
 #include <pspkernel.h>
+#include <psptypes.h>
 
 void setup_exit_callback();
 #endif
-
-// SDL_RenderCopy(renderer, title, NULL, &titleRect);
-// SDL_RenderPresent(renderer);
-// SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-// SDL_RenderClear(renderer);

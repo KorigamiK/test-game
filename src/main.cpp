@@ -1,6 +1,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "mainApp.h"
+#include "utils.h"
+
 // PSP toggle for IDE
 // #define IS_PSP = 1
 
@@ -8,85 +11,44 @@
 #include "pspInitActions.h"
 #endif
 
-#define NAME "Hello Test, KorigamiK"
-#define WIDTH 480
-#define HEIGHT 272
-
-bool running = true;
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
-
-int setupSdl()
-{
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
-
-    window = SDL_CreateWindow(NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == NULL)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to initiation window. Error %s", SDL_GetError());
-        return 1;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (renderer == NULL)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to initialize renderer. Error: %s", SDL_GetError());
-        return 1;
-    }
-
-    return 0;
-}
-
-void handleEvents()
-{
-    SDL_Event event;
-    if (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
-        case SDL_QUIT: running = 0; break;
-        case SDL_CONTROLLERDEVICEADDED: SDL_GameControllerOpen(event.cdevice.which); break;
-        case SDL_CONTROLLERBUTTONDOWN:
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START)
-                running = false;
-            break;
-        }
-    }
-}
-
 int main(int argc, char* argv[])
 {
 #ifdef IS_PSP
 
     setup_exit_callback();
+    pspDebugScreenInit();
+    pspDebugScreenPrintf("%s", utils::get_working_path().c_str());
+    // while (1)
+    // {
+    // }
 
 #endif
 
-    printf("Starting game\n");
-    if (setupSdl() != 0)
-        return 1;
+    Application app;
 
-    if (TTF_Init() == -1)
-        return 5;
+    int initCode = app.initApplication();
+
+    if (initCode != 0)
+        return initCode;
 
     SDL_Rect square = {216, 96, 34, 64};
     TTF_Font* font = TTF_OpenFont("./assets/funkyFont.ttf", 20);
 
     if (font == NULL)
     {
-        printf("TTF_OpenFont font error: %s\n", TTF_GetError());
+        printf("TTF_OpenFont font error: %s\n %s", TTF_GetError(), utils::get_working_path().c_str());
         return 2;
     }
 
     SDL_Color fontColor = {0, 0, 0};
-    SDL_Surface* surface1 = TTF_RenderUTF8_Blended(font, NAME, fontColor);
+    SDL_Surface* surface1 = TTF_RenderUTF8_Blended(font, app.NAME, fontColor);
     if (surface1 == NULL)
     {
         printf("TTF_OpenFont surface: %s\n", TTF_GetError());
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Unable to load create title! SDL Error: %s\n", SDL_GetError());
         return 3;
     }
-    SDL_Texture* title = SDL_CreateTextureFromSurface(renderer, surface1);
+    SDL_Texture* title = SDL_CreateTextureFromSurface(app.renderer, surface1);
     if (title == NULL)
     {
         printf("TTF_OpenFont: %s\n", TTF_GetError());
@@ -97,17 +59,17 @@ int main(int argc, char* argv[])
     SDL_FreeSurface(surface1);
     SDL_Rect titleRect;
     SDL_QueryTexture(title, NULL, NULL, &titleRect.w, &titleRect.h);
-    titleRect.x = WIDTH / 2 - titleRect.w / 2;
-    titleRect.y = HEIGHT / 2 - titleRect.h / 2;
+    titleRect.x = app.WIDTH / 2 - titleRect.w / 2;
+    titleRect.y = app.HEIGHT / 2 - titleRect.h / 2;
 
-    while (running)
+    while (app.running)
     {
-        handleEvents();
+        app.handleEvents();
 
-        SDL_RenderCopy(renderer, title, NULL, &titleRect);
-        SDL_RenderPresent(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderClear(renderer);
+        SDL_RenderCopy(app.renderer, title, NULL, &titleRect);
+        SDL_RenderPresent(app.renderer);
+        SDL_SetRenderDrawColor(app.renderer, 255, 255, 255, 255);
+        SDL_RenderClear(app.renderer);
     }
 
     return 0;

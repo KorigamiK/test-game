@@ -2,7 +2,11 @@
   "cmake.buildDirectory": "${workspaceFolder}/build/${buildKit}/${buildType}",
   "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
   "doxygen_runner.configuration_file_override": "${workspaceFolder}/docs/doxygen/Doxyfile",
-  "cmake.configureOnOpen": true
+  "cmake.configureOnOpen": true,
+  "files.associations": {
+    "iosfwd": "cpp",
+    "string": "cpp"
+  }
   // "C_Cpp.default.includePath": [
   //   // "/usr/local/pspdev/psp/include/**",
   //   // "/usr/local/pspdev/psp/sdk/include/**",

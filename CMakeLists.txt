@@ -8,13 +8,15 @@ set(LOCAL_PROJECT_DESCRIPTION "Description")
 # Header files (relative to "include" directory)
 set(HEADERS
     header.h
-    mainApp.h
+    app.h
+    utils.h
 )
 
 # Source files (relative to "src" directory)
 set(SOURCES
     main.cpp
-    mainApp.cpp
+    utils.cpp
+    app.cpp
 )
 
 # Compiler definitions

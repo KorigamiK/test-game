@@ -9,7 +9,9 @@
                 "${workspaceFolder}/include",
                 "/usr/include/**",
                 "/usr/include",
-                "/usr/include/linux"
+                "/usr/include/linux",
+                "/usr/include/c++/11.2.0",
+                "/usr/include/bits"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",

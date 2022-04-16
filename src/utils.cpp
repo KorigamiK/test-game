@@ -1,5 +1,4 @@
 #include "utils.h"
-#include <unistd.h>
 
 std::string utils::get_working_path()
 {

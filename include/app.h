@@ -17,6 +17,10 @@ public:
     void handleEvents();
     int initApplication();
 
+#ifdef IS_PSP
+    void pspDebugScreenOpen();
+#endif
+
 private:
     int setupSDL();
 };

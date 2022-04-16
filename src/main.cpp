@@ -1,11 +1,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "mainApp.h"
+#include "app.h"
 #include "utils.h"
 
 // PSP toggle for IDE
-// #define IS_PSP = 1
+#define IS_PSP = 1
 
 #ifdef IS_PSP
 #include "pspInitActions.h"
@@ -16,11 +16,14 @@ int main(int argc, char* argv[])
 #ifdef IS_PSP
 
     setup_exit_callback();
+    pspDebugScreenSetBackColor(0xFFFFFFFF);
+    pspDebugScreenSetTextColor(0);
     pspDebugScreenInit();
+    pspDebugScreenSetXY(10, 5);
     pspDebugScreenPrintf("%s", utils::get_working_path().c_str());
-    // while (1)
-    // {
-    // }
+    while (1)
+    {
+    }
 
 #endif
 

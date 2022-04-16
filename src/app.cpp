@@ -1,4 +1,4 @@
-#include "mainApp.h"
+#include "app.h"
 
 int Application::setupSDL()
 {

@@ -5,7 +5,13 @@
   "cmake.configureOnOpen": true,
   "files.associations": {
     "iosfwd": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "iostream": "cpp",
+    "istream": "cpp",
+    "ostream": "cpp",
+    "ios": "cpp",
+    "cstdlib": "cpp",
+    "pspkernel.h": "c"
   }
   // "C_Cpp.default.includePath": [
   //   // "/usr/local/pspdev/psp/include/**",
